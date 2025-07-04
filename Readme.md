@@ -11,7 +11,6 @@ A simple and elegant task management app built with **Django** and styled using 
 - 🔁 Toggle task status between completed and pending
 - 🗑 Delete tasks
 - 🌈 Beautiful UI with Tailwind CSS
-- ☀️🌙 Light/Dark mode friendly
 
 ---
 
