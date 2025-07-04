@@ -1,0 +1,116 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>TODO List</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+      .gradient-header {
+        background: linear-gradient(to right, #4f46e5, #9333ea);
+      }
+      .glow-button {
+        background-color: #fb7185;
+        box-shadow: 0 4px 14px 0 rgba(251, 113, 133, 0.5);
+      }
+      .glow-button:hover {
+        background-color: #f43f5e;
+        box-shadow: 0 6px 18px 0 rgba(251, 113, 133, 0.6);
+      }
+    </style>
+  </head>
+  <body class="bg-gradient-to-b from-purple-100 to-pink-100 min-h-screen font-sans">
+    <!-- Header -->
+    <div class="gradient-header text-white text-center py-6 rounded-b-lg shadow-md">
+      <h1 class="text-2xl font-semibold tracking-wider">TODO List</h1>
+    </div>
+
+    <!-- Form -->
+    <div class="flex justify-center mt-8">
+      <div class="bg-white shadow-lg rounded-lg p-6 w-full max-w-md">
+        <form action="{% url 'add_task' %}" method="POST" class="space-y-4">
+          {% csrf_token %}
+          <input
+            type="text"
+            name="title"
+            placeholder="What would you like to do?"
+            required
+            class="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-purple-400"
+          />
+          <textarea
+            name="description"
+            placeholder="Description"
+            rows="3"
+            required
+            class="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-purple-400"
+          ></textarea>
+          <div class="flex justify-center">
+            <button
+              type="submit"
+              class="glow-button text-white px-6 py-2 rounded-md font-semibold transition"
+            >
+              Add
+            </button>
+          </div>
+        </form>
+      </div>
+    </div>
+
+    <!-- Task List -->
+    <div class="flex justify-center mt-10">
+      <div class="w-full max-w-3xl px-4">
+        <div class="bg-white rounded-lg shadow-md overflow-hidden">
+          <table class="min-w-full text-sm text-left">
+            <thead class="bg-gray-200 text-gray-600 font-semibold">
+              <tr>
+                <th class="py-3 px-4">List</th>
+                <th class="py-3 px-4">Description</th>
+                <th class="py-3 px-4">Status</th>
+                <th class="py-3 px-4 text-center">Actions</th>
+              </tr>
+            </thead>
+            <tbody class="divide-y divide-gray-200">
+              {% for task in tasks %}
+              <tr>
+                <td class="py-3 px-4">{{ task.title }}</td>
+                <td class="py-3 px-4">{{ task.description }}</td>
+                <td class="py-3 px-4">
+                  {% if task.is_completed %}
+                  <span class="bg-blue-200 text-blue-800 text-xs font-medium px-3 py-1 rounded-full">
+                    Completed
+                  </span>
+                  {% else %}
+                  <span class="bg-green-200 text-green-800 text-xs font-medium px-3 py-1 rounded-full">
+                    pending
+                  </span>
+                  {% endif %}
+                </td>
+                  <td class="py-3 px-4 text-center space-x-3">
+                    <a href="{% url 'mark_completed' task.id %}" class="text-green-600 hover:underline">
+                      {% if task.is_completed %}
+                        🔁
+                      {% else %}
+                        ✅
+                      {% endif %}
+                    </a>
+                    <a href="{% url 'edit_task' task.id %}" class="text-yellow-500 hover:text-yellow-600">
+                      ✏️
+                    </a>
+                    <a href="{% url 'delete_task' task.id %}" class="text-red-500 hover:text-red-700">
+                      🗑
+                    </a>
+                </td>
+              </tr>
+              {% empty %}
+              <tr>
+                <td colspan="3" class="text-center text-gray-500 py-4">No tasks available</td>
+              </tr>
+              {% endfor %}
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>
