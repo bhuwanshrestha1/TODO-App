@@ -16,6 +16,9 @@ A simple and elegant task management app built with **Django** and styled using 
 ---
 
 ## 📸 Screenshots
+![image](https://github.com/user-attachments/assets/845a7422-e271-4246-a687-a27f6bcc2e3a)
+
+![image](https://github.com/user-attachments/assets/49af663f-34d2-44a3-894f-82ea182fda5b)
 
 ---
 
